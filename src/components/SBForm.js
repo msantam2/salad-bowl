@@ -23,7 +23,7 @@ const SBForm = () => {
       style={{ marginTop: 60 }}
       {...layout}
       name="basic"
-      onFinish={submitEntries}
+      onFinish={values => submitEntries(values)}
       onFinishFailed={err => console.log('Err: ', err)}
     >
       <Form.Item
