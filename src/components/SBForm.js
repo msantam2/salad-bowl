@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
+import { submitEntries } from '../helpers';
 
 const layout = {
   labelCol: {
@@ -17,15 +18,13 @@ const tailLayout = {
 };
 
 const SBForm = () => {
-  console.log('in SBForm');
-
   return (
     <Form
       style={{ marginTop: 60 }}
       {...layout}
       name="basic"
-      onFinish={val => console.log('onFinish')}
-      onFinishFailed={err => console.log('onFinishFailed')}
+      onFinish={submitEntries}
+      onFinishFailed={err => console.log('Err: ', err)}
     >
       <Form.Item
         label="Entry 1"

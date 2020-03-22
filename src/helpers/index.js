@@ -1,2 +1,2 @@
 export * from './UpdateCommand';
-export * from './Constants';
+export * from './SubmitEntries';
