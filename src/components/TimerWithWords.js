@@ -13,9 +13,11 @@ class TimerWithWords extends React.Component {
   }
 
   render() {
-    return (
-      <p>in timer with words</p>
-    );
+    if (this.state.entries.length === 0) {
+      return <h2>Be patient…</h2>;
+    } else {
+      
+    }
   }
 };
 
