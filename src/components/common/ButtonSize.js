@@ -7,11 +7,18 @@ const ButtonSize = (props) => {
     onClick,
     size,
     type,
+    style,
     children,
   } = props;
 
   return (
-    <Button id={id} onClick={onClick} size={size} type={type}>
+    <Button
+      id={id}
+      onClick={onClick}
+      size={size}
+      type={type}
+      style={style}
+    >
       {children}
     </Button>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
+import GameWaiting from './GameWaiting';
 import { submitEntries } from '../helpers';
 
 const layout = {
@@ -17,87 +18,105 @@ const tailLayout = {
   },
 };
 
-const SBForm = () => {
-  return (
-    <Form
-      style={{ marginTop: 60 }}
-      {...layout}
-      name="basic"
-      onFinish={values => submitEntries(values)}
-      onFinishFailed={err => console.log('Err: ', err)}
-    >
-      <Form.Item
-        label="Entry 1"
-        name="entry1"
-        rules={[
-          {
-            required: true,
-            message: 'Please input Entry 1 ya bish!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
+class SBForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { entriesSubmitted: false };
+  }
 
-      <Form.Item
-        label="Entry 2"
-        name="entry2"
-        rules={[
-          {
-            required: true,
-            message: 'Please input Entry 2 ya bish!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
+  render() {
+    if (!this.state.entriesSubmitted) {
+      return <GameWaiting />;
+    } else {
+      const onFinish = (values) => {
+        const success = submitEntries(values);
+        if (success) {
+          this.setState({ entriesSubmitted: true })
+        }
+      };
 
-      <Form.Item
-        label="Entry 3"
-        name="entry3"
-        rules={[
-          {
-            required: true,
-            message: 'Please input Entry 3 ya bish!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      
-      <Form.Item
-        label="Entry 4"
-        name="entry4"
-        rules={[
-          {
-            required: true,
-            message: 'Please input Entry 4 ya bish!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      
-      <Form.Item
-        label="Entry 5"
-        name="entry5"
-        rules={[
-          {
-            required: true,
-            message: 'Please input Entry 5 ya bish!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
-  );
+      return (
+        <Form
+          style={{ marginTop: 60 }}
+          {...layout}
+          name="basic"
+          onFinish={values => onFinish(values)}
+          onFinishFailed={error => console.log('Form error: ', error)}
+        >
+          <Form.Item
+            label="Entry 1"
+            name="entry1"
+            rules={[
+              {
+                required: true,
+                message: 'Please input Entry 1 ya bish!',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+    
+          <Form.Item
+            label="Entry 2"
+            name="entry2"
+            rules={[
+              {
+                required: true,
+                message: 'Please input Entry 2 ya bish!',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+    
+          <Form.Item
+            label="Entry 3"
+            name="entry3"
+            rules={[
+              {
+                required: true,
+                message: 'Please input Entry 3 ya bish!',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          
+          <Form.Item
+            label="Entry 4"
+            name="entry4"
+            rules={[
+              {
+                required: true,
+                message: 'Please input Entry 4 ya bish!',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          
+          <Form.Item
+            label="Entry 5"
+            name="entry5"
+            rules={[
+              {
+                required: true,
+                message: 'Please input Entry 5 ya bish!',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+    
+          <Form.Item {...tailLayout}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      );
+    }
+  }
 };
 
 export default SBForm;
