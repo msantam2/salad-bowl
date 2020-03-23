@@ -2,6 +2,7 @@ import React from 'react';
 import Firebase from 'firebase/app';
 import 'firebase/firestore';
 import PlayGame from './PlayGame';
+import RoundOne from './RoundOne';
 
 class GameWaiting extends React.Component {
   constructor(props) {
@@ -32,8 +33,7 @@ class GameWaiting extends React.Component {
 
   render() {
     if (this.state.gameReady) {
-      // RETURN COMPONENT THAT WILL ACTUALLY START PLAYING GAME
-      return <p>Start Playing</p>;
+      return <RoundOne />;
     } else {
       return (
         <div style={{ textAlign: 'center', width: '80%' }}>

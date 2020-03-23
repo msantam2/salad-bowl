@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
 import GameWaiting from './GameWaiting';
-import { submitEntries } from '../helpers';
+import { submitEntries, stopGame } from '../helpers';
 
 const layout = {
   labelCol: {
@@ -24,8 +24,12 @@ class SBForm extends React.Component {
     this.state = { entriesSubmitted: false };
   }
 
+  componentDidMount() {
+    stopGame();
+  }
+
   render() {
-    if (!this.state.entriesSubmitted) {
+    if (this.state.entriesSubmitted) {
       return <GameWaiting />;
     } else {
       const onFinish = (values) => {
