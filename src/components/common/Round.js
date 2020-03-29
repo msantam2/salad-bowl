@@ -1,18 +1,18 @@
 import React from 'react';
-import TimerWithWords from './TimerWithWords';
+import TimerWithWords from '../TimerWithWords';
 
-const RoundOne = () => {
+const Round = ({ roundNumber, gameTitle, gameDescription }) => {
   return (
     <div>
       <h1
         style={{ textAlign: 'center' }}
       >
-        Round One: Catch Phrase
+        Round {roundNumber}: {gameTitle}
       </h1>
       <h3
         style={{ textAlign: 'center', marginBottom: 100 }}
       >
-        Describe the word or phrase, without saying it!
+        {gameDescription}
       </h3>
 
       <TimerWithWords />
@@ -20,4 +20,4 @@ const RoundOne = () => {
   );
 };
 
-export default RoundOne;
+export { Round };

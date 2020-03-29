@@ -2,7 +2,7 @@ import React from 'react';
 import Firebase from 'firebase/app';
 import 'firebase/firestore';
 import PlayGame from './PlayGame';
-import RoundOne from './RoundOne';
+import { Round } from './common';
 
 class GameWaiting extends React.Component {
   constructor(props) {
@@ -33,7 +33,13 @@ class GameWaiting extends React.Component {
 
   render() {
     if (this.state.gameReady) {
-      return <RoundOne />;
+      return (
+        <Round
+          roundNumber='One'
+          gameTitle='Catch Phrase'
+          gameDescription='Describe the word or phrase, without saying it!'
+        />
+      );
     } else {
       return (
         <div style={{ textAlign: 'center', width: '80%' }}>

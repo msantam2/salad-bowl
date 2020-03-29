@@ -1,4 +1,5 @@
 import React from 'react';
+import Countdown from 'react-countdown';
 import { getEntries } from '../helpers';
 
 class TimerWithWords extends React.Component {
@@ -16,9 +17,9 @@ class TimerWithWords extends React.Component {
     let entries = this.state.entries;
 
     if (entries.length === 0) {
-      return <h2>Be patient…</h2>;
+      return <h2>Be patient…loading entries</h2>;
     } else {
-      
+      return <Countdown date={Date.now() + 60000} />;
     }
   }
 };
