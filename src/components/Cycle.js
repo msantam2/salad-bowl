@@ -1,5 +1,6 @@
 import React from 'react';
 import Countdown from 'react-countdown';
+import * as d3 from 'd3-array';
 import NextRound from './NextRound';
 import { getEntries } from '../helpers';
 import { ButtonSize } from './common';
@@ -13,6 +14,7 @@ class Cycle extends React.Component {
       entries: [],
       entryIndex: 0,
       completedEntries: {},
+      readyForNextRound: false,
     };
   }
 
@@ -21,7 +23,7 @@ class Cycle extends React.Component {
 
     entries.then(values => {
       this.setState({
-        entries: values,
+        entries: d3.shuffle(values),
         entriesLoaded: true,
       })
     });
@@ -48,20 +50,22 @@ class Cycle extends React.Component {
       return <h2>Loading the Salad Bowl…</h2>;
     }
 
+    if (this.state.readyForNextRound) {
+      return <NextRound incrementRound={this.props.incrementRound} />;
+    }
+
     const { date, entries, entryIndex } = this.state;
     const currentEntry = entries[entryIndex];
 
-    const renderer = ({ _hours, _minutes, seconds, completed }) => {
-      if (completed) {
-        return <p>completed!</p>;
-        // if entries empty
-          // <NextRound incrementRound={this.props.incrementRound} />;
+    const onComplete = () => {
+      this.setState({ readyForNextRound: true });
+      // do work on entries
 
-        // if entries still there
-          // run another cycle
-      } else {
-        return <p style={timerStyle}>{seconds}</p>;
-      }
+      // any left?
+        // run another cycle
+
+      // none left
+        // update state that we are ready for next round
     };
 
     return (
@@ -92,7 +96,7 @@ class Cycle extends React.Component {
         <Countdown
           key={Date.now()}
           date={date}
-          renderer={renderer}
+          onComplete={onComplete}
         />
       </div>
     );
