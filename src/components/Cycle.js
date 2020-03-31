@@ -10,7 +10,7 @@ class Cycle extends React.Component {
     super(props);
     this.state = {
       entriesLoaded: false,
-      date: Date.now() + 5000,
+      date: Date.now() + 500000,
       entries: [],
       entryIndex: 0,
       completedEntries: {},
@@ -93,11 +93,13 @@ class Cycle extends React.Component {
           </div>
         </div>
 
-        <Countdown
-          key={Date.now()}
-          date={date}
-          onComplete={onComplete}
-        />
+        <div style={timerStyle}>
+          <Countdown
+            key={Date.now()}
+            date={date}
+            onComplete={onComplete}
+          />
+        </div>
       </div>
     );
 
@@ -117,10 +119,10 @@ const entryStyle = {
   marginBottom: '50px',
 };
 
-// const timerStyle = {
-//   margin: '0 auto',
-//   textAlign: 'center',
-//   fontSize: '50px'
-// };
+const timerStyle = {
+  color: 'black',
+  fontSize: '50px',
+  textAlign: 'center',
+};
 
 export default Cycle;
