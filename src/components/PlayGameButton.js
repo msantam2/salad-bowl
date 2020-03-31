@@ -7,8 +7,8 @@ const PlayGameButton = () => {
     <ButtonSize
       style={{ marginTop: 30 }}
       onClick={() => gameReady()}
-      size={'large'}
-      type={'primary'}
+      size='large'
+      type='primary'
     >
       PLAY
     </ButtonSize>
