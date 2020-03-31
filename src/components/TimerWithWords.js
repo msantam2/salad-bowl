@@ -36,9 +36,11 @@ class TimerWithWords extends React.Component {
         }
       };
 
+
       return (
         <div>
           <Countdown
+            key={Date.now()}
             date={Date.now() + 3000}
             renderer={renderer}
           />

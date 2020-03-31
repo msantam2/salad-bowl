@@ -43,7 +43,13 @@ class Game extends React.Component {
         />
       );
     } else {
-      return <h1>Game Over! Hope you had fun. Refresh to play again.</h1>;
+      return (
+        <h1
+          style={{ textAlign: 'center' }}
+        >
+          Game Over! Hope you had fun. Refresh to play again.
+        </h1>
+      );
     }
   }
 }
