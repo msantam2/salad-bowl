@@ -10,7 +10,7 @@ class Cycle extends React.Component {
     super(props);
     this.state = {
       entriesLoaded: false,
-      date: Date.now() + 500000,
+      date: Date.now() + 5000,
       entries: [],
       entryIndex: 0,
       completedEntries: {},
@@ -43,6 +43,11 @@ class Cycle extends React.Component {
         ...newCompletedEntry,
       },
     });
+  }
+
+  forceNextRound() {
+    console.log('forcing next round');
+    this.setState({ readyForNextRound: true });
   }
 
   render() {
@@ -100,17 +105,25 @@ class Cycle extends React.Component {
             onComplete={onComplete}
           />
         </div>
+
+        <ButtonSize
+          style={forceButtonStyle}
+          onClick={() => this.forceNextRound()}
+          size={'small'}
+          type={'primary'} 
+        >
+          (FORCE NEXT ROUND)
+        </ButtonSize>
       </div>
     );
 
   }
 };
 
-
 const buttonContainerStyle = {
   display: 'flex',
   justifyContent: 'space-evenly',
-  marginBottom: '100px',
+  marginBottom: '10px',
 };
 
 const entryStyle = {
@@ -124,5 +137,12 @@ const timerStyle = {
   fontSize: '50px',
   textAlign: 'center',
 };
+
+const forceButtonStyle = {
+  width: '100%',
+  marginTop: '100px',
+  border: 'none',
+  backgroundColor: 'red',
+}
 
 export default Cycle;
