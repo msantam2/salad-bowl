@@ -5,6 +5,7 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = { round: 1 };
+    this.incrementRound = this.incrementRound.bind(this);
 
     this.roundDetails = {
       1: {
