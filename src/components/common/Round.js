@@ -13,7 +13,7 @@ const Round = ({ roundNumber, gameTitle, gameDescription, incrementRound }) => {
         {gameDescription}
       </h3>
 
-      <Cycle incrementRound={incrementRound} />
+      <Cycle key={Date.now()} incrementRound={incrementRound} />
     </div>
   );
 };
