@@ -6,9 +6,10 @@ import { getEntries } from '../helpers';
 class TimerWithWords extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      entries: [],
-    };
+
+    // this.props.incrementRound
+
+    this.state = { entries: [] };
   }
 
   componentDidMount() {
@@ -17,14 +18,14 @@ class TimerWithWords extends React.Component {
   }
 
   render() {
-    let entries = this.state.entries;
+    let { entries } = this.state;
 
     if (entries.length === 0) {
       return <h2>Loading the Salad Bowl…</h2>;
     } else {
       const renderer = ({ _hours, _minutes, seconds, completed }) => {
         if (completed) {
-          return <p>Done with cycle!</p>
+          return <h2>Timer completed</h2>;
         } else {
           return (
             <p style={timerStyle}>{seconds}</p>

@@ -1,10 +1,10 @@
 import React from 'react';
 import Firebase from 'firebase/app';
 import 'firebase/firestore';
-import PlayGame from './PlayGame';
-import { Round } from './common';
+import PlayGameButton from './PlayGameButton';
+import Game from './Game';
 
-class GameWaiting extends React.Component {
+class GameWaitingRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = { gameReady: false };
@@ -33,22 +33,16 @@ class GameWaiting extends React.Component {
 
   render() {
     if (this.state.gameReady) {
-      return (
-        <Round
-          roundNumber='One'
-          gameTitle='Catch Phrase'
-          gameDescription='Describe the word or phrase, without saying it!'
-        />
-      );
+      return <Game />;
     } else {
       return (
         <div style={{ textAlign: 'center', width: '80%' }}>
           <h2>Thank you for your entries into the bowl, weirdo.</h2>
-          <PlayGame />
+          <PlayGameButton />
         </div>
       );
     }
   }
 };
 
-export default GameWaiting;
+export default GameWaitingRoom;

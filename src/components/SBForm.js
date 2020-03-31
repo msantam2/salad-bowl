@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
-import GameWaiting from './GameWaiting';
+import GameWaitingRoom from './GameWaitingRoom';
 import { submitEntries, stopGame } from '../helpers';
 
 const layout = {
@@ -30,7 +30,7 @@ class SBForm extends React.Component {
 
   render() {
     if (this.state.entriesSubmitted) {
-      return <GameWaiting />;
+      return <GameWaitingRoom />;
     } else {
       const onFinish = (values) => {
         const success = submitEntries(values);

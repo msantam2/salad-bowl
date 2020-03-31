@@ -1,12 +1,12 @@
 import React from 'react';
 import { ButtonSize } from './common';
-import { playGame } from '../helpers';
+import { gameReady } from '../helpers';
 
-const PlayGame = () => {
+const PlayGameButton = () => {
   return (
     <ButtonSize
       style={{ marginTop: 30 }}
-      onClick={() => playGame()}
+      onClick={() => gameReady()}
       size={'large'}
       type={'primary'}
     >
@@ -15,4 +15,4 @@ const PlayGame = () => {
   );
 };
 
-export default PlayGame;
+export default PlayGameButton;

@@ -1,7 +1,7 @@
 import Firebase from 'firebase/app';
 import 'firebase/firestore';
 
-const playGame = () => {
+const gameReady = () => {
   const db = Firebase.firestore();
 
   db.collection('game').doc('ready')
@@ -14,4 +14,4 @@ const playGame = () => {
   });
 };
 
-export { playGame };
+export { gameReady };

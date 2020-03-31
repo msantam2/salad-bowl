@@ -1,7 +1,7 @@
 import React from 'react';
 import TimerWithWords from '../TimerWithWords';
 
-const Round = ({ roundNumber, gameTitle, gameDescription }) => {
+const Round = ({ roundNumber, gameTitle, gameDescription, incrementRound }) => {
   return (
     <div>
       <h1 style={titleStyle}>
@@ -13,7 +13,7 @@ const Round = ({ roundNumber, gameTitle, gameDescription }) => {
         {gameDescription}
       </h3>
 
-      <TimerWithWords />
+      <TimerWithWords incrementRound={incrementRound} />
     </div>
   );
 };
