@@ -1,10 +1,10 @@
 import React from 'react';
 import Countdown from 'react-countdown';
 import NextRound from './NextRound';
-import { ButtonSize } from './common';
+import IterateEntries from './IterateEntries';
 import { getEntries } from '../helpers';
 
-class TimerWithWords extends React.Component {
+class Cycle extends React.Component {
   constructor(props) {
     super(props);
     this.state = { entries: [] };
@@ -23,22 +23,20 @@ class TimerWithWords extends React.Component {
     } else {
       const renderer = ({ _hours, _minutes, seconds, completed }) => {
         if (completed) {
-          // if bowl is empty
-            // increment round
-          return <NextRound incrementRound={this.props.incrementRound} />;
-
-          // if bowl not empty
-            // start another cycle until bowl is empty
+          if (this.state.entries.length === 0) {
+            return <NextRound incrementRound={this.props.incrementRound} />;
+          } else {
+            return <p>another cycle</p>
+          }
         } else {
-          return (
-            <p style={timerStyle}>{seconds}</p>
-          );
+          return <p style={timerStyle}>{seconds}</p>;
         }
       };
 
-
       return (
         <div>
+          <IterateEntries entries={entries} />
+
           <Countdown
             key={Date.now()}
             date={Date.now() + 3000}
@@ -56,4 +54,4 @@ const timerStyle = {
   fontSize: '50px'
 };
 
-export default TimerWithWords;
+export default Cycle;

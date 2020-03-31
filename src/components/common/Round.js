@@ -1,5 +1,5 @@
 import React from 'react';
-import TimerWithWords from '../TimerWithWords';
+import Cycle from '../Cycle';
 
 const Round = ({ roundNumber, gameTitle, gameDescription, incrementRound }) => {
   return (
@@ -13,7 +13,7 @@ const Round = ({ roundNumber, gameTitle, gameDescription, incrementRound }) => {
         {gameDescription}
       </h3>
 
-      <TimerWithWords incrementRound={incrementRound} />
+      <Cycle incrementRound={incrementRound} />
     </div>
   );
 };
