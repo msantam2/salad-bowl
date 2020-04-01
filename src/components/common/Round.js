@@ -13,10 +13,12 @@ const Round = ({ roundNumber, gameTitle, gameDescription, incrementRound }) => {
         {gameDescription}
       </h3>
 
-      <Cycle key={Date.now()} incrementRound={incrementRound} />
+      <Cycle key={Date.now()} />
     </div>
   );
 };
+
+// incrementRound={incrementRound}
 
 const titleStyle = { textAlign: 'center', };
 

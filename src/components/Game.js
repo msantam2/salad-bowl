@@ -1,11 +1,13 @@
 import React from 'react';
+import Firebase from 'firebase/app';
+import 'firebase/firestore';
 import { Round } from './common';
 
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { round: 1 };
-    this.incrementRound = this.incrementRound.bind(this);
+    this.state = { round: null };
+    // this.incrementRound = this.incrementRound.bind(this);
 
     this.roundDetails = {
       1: {
@@ -26,12 +28,37 @@ class Game extends React.Component {
     }
   }
 
-  incrementRound() {
-    this.setState({ round: this.state.round + 1 });
+  listenForRoundUpdate() {
+    const db = Firebase.firestore();
+
+    db.collection('rounds').doc('round')
+    .onSnapshot((doc) => {
+      console.log('Round state: ', doc.data());
+
+      if (doc.data()) {
+        const round = doc.data().round;
+
+        if (round) {
+          this.setState({ round });
+        }
+      }
+    });
   }
+
+  componentDidMount() {
+    this.listenForRoundUpdate();
+  }
+
+  // incrementRound() {
+  //   this.setState({ round: this.state.round + 1 });
+  // }
 
   render() {
     const { round } = this.state;
+
+    if (!round) {
+      return <h1>Waiting for Round to load…</h1>
+    }
 
     if (round <= 3) {
       return (
@@ -39,18 +66,18 @@ class Game extends React.Component {
           roundNumber={this.roundDetails[round]['roundNumber']}
           gameTitle={this.roundDetails[round]['gameTitle']}
           gameDescription={this.roundDetails[round]['gameDescription']}
-          incrementRound={this.incrementRound}
+          // incrementRound={this.incrementRound}
         />
       );
-    } else {
-      return (
-        <h1
-          style={{ textAlign: 'center' }}
-        >
-          Game Over! Hope you had fun. Refresh to play again.
-        </h1>
-      );
     }
+
+    return (
+      <h1
+        style={{ textAlign: 'center' }}
+      >
+        Game Over! Hope you had fun. Refresh to play again.
+      </h1>
+    );
   }
 }
 
