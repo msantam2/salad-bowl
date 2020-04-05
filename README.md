@@ -1,5 +1,8 @@
 # Salad Bowl
 
+A game to play with your family & friends who are also in quarantine.
+Have fun, think hard, play to win!
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
