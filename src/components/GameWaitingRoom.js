@@ -1,8 +1,10 @@
 import React from 'react';
 import Firebase from 'firebase/app';
 import 'firebase/firestore';
-import PlayGameButton from './PlayGameButton';
+
 import Game from './Game';
+import { PlayButton } from './common';
+import { gameReady } from '../helpers'
 
 class GameWaitingRoom extends React.Component {
   constructor(props) {
@@ -38,7 +40,7 @@ class GameWaitingRoom extends React.Component {
       return (
         <div style={{ textAlign: 'center', width: '80%' }}>
           <h2>Thank you for your entries into the bowl, weirdo.</h2>
-          <PlayGameButton />
+          <PlayButton playFunc={gameReady}>PLAY</PlayButton>
         </div>
       );
     }

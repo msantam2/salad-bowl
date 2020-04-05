@@ -1,22 +1,22 @@
 import React from 'react';
-import Cycle from '../Cycle';
+import CycleManager from '../CycleManager';
 
 const Round = ({ roundNumber, gameTitle, gameDescription }) => {
   return (
-    <div>
-      <h1 style={titleStyle}>
+    <div style={containerStyle}>
+      <h1>
         Round {roundNumber}: {gameTitle}
       </h1>
       <h3 style={descriptionStyle}>
         {gameDescription}
       </h3>
 
-      <Cycle key={Date.now()} />
+      <CycleManager key={Date.now()} />
     </div>
   );
 };
 
-const titleStyle = { textAlign: 'center', };
+const containerStyle = { textAlign: 'center', };
 
 const descriptionStyle = {
   textAlign: 'center',
