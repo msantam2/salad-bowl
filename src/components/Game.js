@@ -7,7 +7,6 @@ class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = { round: null };
-    // this.incrementRound = this.incrementRound.bind(this);
 
     this.roundDetails = {
       1: {
@@ -49,10 +48,6 @@ class Game extends React.Component {
     this.listenForRoundUpdate();
   }
 
-  // incrementRound() {
-  //   this.setState({ round: this.state.round + 1 });
-  // }
-
   render() {
     const { round } = this.state;
 
@@ -66,15 +61,12 @@ class Game extends React.Component {
           roundNumber={this.roundDetails[round]['roundNumber']}
           gameTitle={this.roundDetails[round]['gameTitle']}
           gameDescription={this.roundDetails[round]['gameDescription']}
-          // incrementRound={this.incrementRound}
         />
       );
     }
 
     return (
-      <h1
-        style={{ textAlign: 'center' }}
-      >
+      <h1 style={{ textAlign: 'center' }}>
         Game Over! Hope you had fun. Refresh to play again.
       </h1>
     );

@@ -1,7 +1,8 @@
 import React from 'react';
+import { nextRound } from '../helpers';
 import { ButtonSize } from './common';
 
-const NextRound = ({ incrementRound }) => {
+const NextRound = () => {
   return (
     <div style={containerStyle}>
       <h1 style={titleStyle}>
@@ -14,7 +15,7 @@ const NextRound = ({ incrementRound }) => {
       </h3>
 
       <ButtonSize
-        onClick={incrementRound}
+        onClick={nextRound}
         size='large'
         type='primary'
       >

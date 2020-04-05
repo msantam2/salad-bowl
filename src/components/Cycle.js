@@ -1,8 +1,10 @@
 import React from 'react';
 import Countdown from 'react-countdown';
 import * as d3 from 'd3-array';
-import NextRound from './NextRound';
-import { getEntries } from '../helpers';
+import Firebase from 'firebase/app';
+import 'firebase/firestore';
+
+import { getEntries, nextRound } from '../helpers';
 import { ButtonSize } from './common';
 
 class Cycle extends React.Component {
@@ -14,7 +16,6 @@ class Cycle extends React.Component {
       entries: [],
       entryIndex: 0,
       completedEntries: {},
-      readyForNextRound: false,
     };
   }
 
@@ -45,25 +46,15 @@ class Cycle extends React.Component {
     });
   }
 
-  forceNextRound() {
-    console.log('forcing next round');
-    this.setState({ readyForNextRound: true });
-  }
-
   render() {
     if (!(this.state.entriesLoaded)) {
       return <h2>Loading the Salad Bowl…</h2>;
-    }
-
-    if (this.state.readyForNextRound) {
-      return <NextRound incrementRound={this.props.incrementRound} />;
     }
 
     const { date, entries, entryIndex } = this.state;
     const currentEntry = entries[entryIndex];
 
     const onComplete = () => {
-      this.setState({ readyForNextRound: true });
       // do work on entries
 
       // any left?
@@ -82,16 +73,16 @@ class Cycle extends React.Component {
             <ButtonSize
               style={{ border: 'none', backgroundColor: 'orange' }}
               onClick={() => this.skipEntry()}
-              size={'large'}
-              type={'primary'}
+              size='large'
+              type='primary'
             >
               SKIP
             </ButtonSize>
             <ButtonSize
               style={{ border: 'none', backgroundColor: 'green' }}
               onClick={() => this.nextEntry(currentEntry)}
-              size={'large'}
-              type={'primary'}  
+              size='large'
+              type='primary'
             >
               NEXT
             </ButtonSize>
@@ -108,15 +99,14 @@ class Cycle extends React.Component {
 
         <ButtonSize
           style={forceButtonStyle}
-          onClick={() => this.forceNextRound()}
-          size={'small'}
-          type={'primary'} 
+          onClick={() => nextRound()}
+          size='small'
+          type='primary'
         >
           (FORCE NEXT ROUND)
         </ButtonSize>
       </div>
     );
-
   }
 };
 
@@ -139,8 +129,8 @@ const timerStyle = {
 };
 
 const forceButtonStyle = {
-  width: '100%',
-  marginTop: '100px',
+  width: '80%',
+  marginTop: '50px',
   border: 'none',
   backgroundColor: 'red',
 }

@@ -1,15 +1,13 @@
 import React from 'react';
 import Cycle from '../Cycle';
 
-const Round = ({ roundNumber, gameTitle, gameDescription, incrementRound }) => {
+const Round = ({ roundNumber, gameTitle, gameDescription }) => {
   return (
     <div>
       <h1 style={titleStyle}>
         Round {roundNumber}: {gameTitle}
       </h1>
-      <h3
-        style={descriptionStyle}
-      >
+      <h3 style={descriptionStyle}>
         {gameDescription}
       </h3>
 
@@ -17,8 +15,6 @@ const Round = ({ roundNumber, gameTitle, gameDescription, incrementRound }) => {
     </div>
   );
 };
-
-// incrementRound={incrementRound}
 
 const titleStyle = { textAlign: 'center', };
 
