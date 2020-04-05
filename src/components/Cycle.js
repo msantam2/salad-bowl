@@ -54,6 +54,8 @@ class Cycle extends React.Component {
     const currentEntry = entries[entryIndex];
 
     const onComplete = () => {
+      this.props.cycleNotReady();
+
       // do work on entries
 
       // any left?
@@ -96,6 +98,14 @@ class Cycle extends React.Component {
           />
         </div>
 
+        <ButtonSize
+          style={forceButtonStyle}
+          onClick={() => this.props.cycleNotReady()}
+          size='small'
+          type='primary'
+        >
+          FORCE NEXT CYCLE
+        </ButtonSize>
         <ButtonSize
           style={forceButtonStyle}
           onClick={() => nextRound()}

@@ -5,14 +5,15 @@ import Cycle from './Cycle';
 class CycleManager extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      cycleReady: false,
-      firstCycle: true,
-    };
+    this.state = { cycleReady: false };
   }
 
   cycleReady() {
     this.setState({ cycleReady: true });
+  }
+
+  cycleNotReady() {
+    this.setState({ cycleReady: false });
   }
 
   render() {
@@ -24,7 +25,12 @@ class CycleManager extends React.Component {
       );
     }
 
-    return <p>CycleManager</p>
+    return (
+      <Cycle
+        key={Date.now()}
+        cycleNotReady={this.cycleNotReady.bind(this)}
+      />
+    );
   }
 };
 
