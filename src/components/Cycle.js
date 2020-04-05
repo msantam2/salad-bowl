@@ -1,8 +1,6 @@
 import React from 'react';
 import Countdown from 'react-countdown';
 import * as d3 from 'd3-array';
-import Firebase from 'firebase/app';
-import 'firebase/firestore';
 
 import { getEntries, nextRound } from '../helpers';
 import { ButtonSize } from './common';
@@ -10,9 +8,10 @@ import { ButtonSize } from './common';
 class Cycle extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      entriesLoaded: false,
       date: Date.now() + 5000,
+      entriesLoaded: false,
       entries: [],
       entryIndex: 0,
       completedEntries: {},
@@ -48,7 +47,7 @@ class Cycle extends React.Component {
 
   render() {
     if (!(this.state.entriesLoaded)) {
-      return <h2>Loading the Salad Bowl…</h2>;
+      return <h2>Retrieving the Salad Bowl…</h2>;
     }
 
     const { date, entries, entryIndex } = this.state;
@@ -61,11 +60,11 @@ class Cycle extends React.Component {
         // run another cycle
 
       // none left
-        // update state that we are ready for next round
+        // ready for next round (NextRound component)
     };
 
     return (
-      <div>
+      <div style={containerStyle}>
         <div>
           <h1 style={entryStyle}>{currentEntry}</h1>
 
@@ -109,6 +108,8 @@ class Cycle extends React.Component {
     );
   }
 };
+
+const containerStyle = { textAlign: 'center' };
 
 const buttonContainerStyle = {
   display: 'flex',
