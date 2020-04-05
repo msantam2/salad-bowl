@@ -8,23 +8,23 @@ class Cycle extends React.Component {
     super(props);
 
     this.state = {
-      date: Date.now() + 15000,
+      date: Date.now() + 30000,
       entryIndex: 0,
     };
 
-    this.createEntriesTracker();
+    this.createEntriesCompletedTracker();
   }
 
-  createEntriesTracker() {
-    let entriesTracker = {};
+  createEntriesCompletedTracker() {
+    let entriesCompletedTracker = {};
     const { entriesList } = this.props;
 
     for (let i = 0; i < entriesList.length; i++) {
       let entry = entriesList[i];
-      entriesTracker[entry] = false;
+      entriesCompletedTracker[entry] = false;
     }
 
-    this.entriesTracker = entriesTracker;
+    this.entriesCompletedTracker = entriesCompletedTracker;
   }
 
   calculateNextIndex() {
@@ -43,7 +43,7 @@ class Cycle extends React.Component {
   }
 
   nextEntry(entry) {
-    this.entriesTracker[entry] = true;
+    this.entriesCompletedTracker[entry] = true;
     const nextIndex = this.calculateNextIndex();
     this.setState({ entryIndex: nextIndex });
   }
@@ -53,10 +53,16 @@ class Cycle extends React.Component {
     const { entriesList } = this.props;
     let entry = entriesList[entryIndex];
 
-    // need to figure out end state of this loop
-    while (this.entriesTracker[entry]) {
+    let completedCounter = 0;
+    const entriesListLength = this.props.entriesList.length;
+    while (this.entriesCompletedTracker[entry] && completedCounter < entriesListLength) {
+      completedCounter += 1;
       let nextIndex = this.calculateNextIndex();
       entry = entriesList[nextIndex];
+    }
+
+    if (completedCounter === entriesListLength) {
+      return '***ROUND IS COMPLETE***';
     }
 
     return entry;
@@ -64,6 +70,19 @@ class Cycle extends React.Component {
 
   render() {
     const currentEntry = this.getCurrentEntry();
+
+    if (currentEntry === '***ROUND IS COMPLETE***') {
+      return (
+        <ButtonSize
+          style={forceButtonStyle}
+          onClick={() => nextRound()}
+          size='small'
+          type='primary'
+        >
+          DONE! Play Next Round
+        </ButtonSize>
+      );
+    }
 
     const onComplete = () => {
       // pass cycle results back up to CycleManager
