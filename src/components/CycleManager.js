@@ -1,11 +1,28 @@
 import React from 'react';
-import { PlayButton } from './common';
+import * as d3 from 'd3-array';
 import Cycle from './Cycle';
+import { PlayButton } from './common';
+import { getEntries } from '../helpers';
 
 class CycleManager extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { cycleReady: false };
+
+    this.state = {
+      cycleReady: false,
+      entriesList: [],
+    };
+  }
+
+  componentDidMount() {
+    const entries = getEntries();
+
+    entries.then(values => {
+      this.setState({
+        entriesList: d3.shuffle(values), // ?
+        // entriesLoaded: true, // ?
+      })
+    });
   }
 
   cycleReady() {
@@ -29,6 +46,7 @@ class CycleManager extends React.Component {
       <Cycle
         key={Date.now()}
         cycleNotReady={this.cycleNotReady.bind(this)}
+        entriesList={this.state.entriesList}
       />
     );
   }

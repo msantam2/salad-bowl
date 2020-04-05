@@ -1,8 +1,6 @@
 import React from 'react';
 import Countdown from 'react-countdown';
-import * as d3 from 'd3-array';
-
-import { getEntries, nextRound } from '../helpers';
+import { nextRound } from '../helpers';
 import { ButtonSize } from './common';
 
 class Cycle extends React.Component {
@@ -10,59 +8,66 @@ class Cycle extends React.Component {
     super(props);
 
     this.state = {
-      date: Date.now() + 5000,
-      entriesLoaded: false,
-      entries: [],
+      date: Date.now() + 15000,
       entryIndex: 0,
-      completedEntries: {},
     };
+
+    this.createEntriesTracker();
   }
 
-  componentDidMount() {
-    const entries = getEntries();
+  createEntriesTracker() {
+    let entriesTracker = {};
+    const { entriesList } = this.props;
 
-    entries.then(values => {
-      this.setState({
-        entries: d3.shuffle(values),
-        entriesLoaded: true,
-      })
-    });
+    for (let i = 0; i < entriesList.length; i++) {
+      let entry = entriesList[i];
+      entriesTracker[entry] = false;
+    }
+
+    this.entriesTracker = entriesTracker;
+  }
+
+  calculateNextIndex() {
+    const nextIndex = this.state.entryIndex + 1;
+
+    if (nextIndex === this.props.entriesList.length) {
+      return 0;
+    }
+
+    return nextIndex;
   }
 
   skipEntry() {
-    this.setState({ entryIndex: this.state.entryIndex + 1 });
+    const nextIndex = this.calculateNextIndex();
+    this.setState({ entryIndex: nextIndex });
   }
 
   nextEntry(entry) {
-    const newCompletedEntry = { entry: true };
+    this.entriesTracker[entry] = true;
+    const nextIndex = this.calculateNextIndex();
+    this.setState({ entryIndex: nextIndex });
+  }
 
-    this.setState({
-      entryIndex: this.state.entryIndex + 1,
-      completedEntries: {
-        ...this.state.completedEntries,
-        ...newCompletedEntry,
-      },
-    });
+  getCurrentEntry() {
+    const { entryIndex } = this.state;
+    const { entriesList } = this.props;
+    let entry = entriesList[entryIndex];
+
+    // need to figure out end state of this loop
+    while (this.entriesTracker[entry]) {
+      let nextIndex = this.calculateNextIndex();
+      entry = entriesList[nextIndex];
+    }
+
+    return entry;
   }
 
   render() {
-    if (!(this.state.entriesLoaded)) {
-      return <h2>Retrieving the Salad Bowl…</h2>;
-    }
-
-    const { date, entries, entryIndex } = this.state;
-    const currentEntry = entries[entryIndex];
+    const currentEntry = this.getCurrentEntry();
 
     const onComplete = () => {
+      // pass cycle results back up to CycleManager
       this.props.cycleNotReady();
-
-      // do work on entries
-
-      // any left?
-        // run another cycle
-
-      // none left
-        // ready for next round (NextRound component)
     };
 
     return (
@@ -93,7 +98,7 @@ class Cycle extends React.Component {
         <div style={timerStyle}>
           <Countdown
             key={Date.now()}
-            date={date}
+            date={this.state.date}
             onComplete={onComplete}
           />
         </div>

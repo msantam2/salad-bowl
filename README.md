@@ -3,6 +3,12 @@
 A game to play with your family & friends who are also in quarantine.
 Have fun, think hard, play to win!
 
+## Room for improvement (for now, no!)
+- To support multiple groups playing (simultaneous games), landing page UI to enter group name. Then, prepend this group name to calls to Firebase. This way, games can be isolated from one another (namespaced).
+
+
+-------------------
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
