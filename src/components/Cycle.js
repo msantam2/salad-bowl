@@ -103,7 +103,7 @@ class Cycle extends React.Component {
           size='small'
           type='primary'
         >
-          (FORCE NEXT ROUND)
+          FORCE NEXT ROUND
         </ButtonSize>
       </div>
     );
@@ -129,10 +129,11 @@ const timerStyle = {
 };
 
 const forceButtonStyle = {
-  width: '80%',
+  width: '60%',
   marginTop: '50px',
   border: 'none',
   backgroundColor: 'red',
+  height: '45px',
 }
 
 export default Cycle;
