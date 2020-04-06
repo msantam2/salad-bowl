@@ -7,19 +7,25 @@ import { getEntries } from '../helpers';
 class CycleManager extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { cycleReady: false, entriesList: [] };
-  }
+    this.state = {
+      cycleReady: false,
+      entriesList: [],
+    };
 
-  componentDidMount() {
-    const entries = getEntries();
-
-    entries.then(values => {
-      this.setState({ entriesList: d3.shuffle(values) });
-    });
+    this.initialFetch = true;
   }
 
   cycleReady() {
-    this.setState({ cycleReady: true });
+    const entriesToFetch = this.initialFetch ? 'all' : 'still in bowl';
+    const entries = getEntries(entriesToFetch);
+
+    entries.then(values => {
+      this.initialFetch = false;
+      this.setState({
+        entriesList: d3.shuffle(values),
+        cycleReady: true,
+      });
+    });
   }
 
   cycleNotReady(entriesCompletedTracker) {
@@ -33,8 +39,10 @@ class CycleManager extends React.Component {
       }
     }
 
-
+    // push stilInBowl to still_in_bowl collection
     
+
+    // nest this inside
     this.setState({ cycleReady: false });
   }
 
