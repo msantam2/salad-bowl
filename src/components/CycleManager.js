@@ -18,10 +18,7 @@ class CycleManager extends React.Component {
     const entries = getEntries();
 
     entries.then(values => {
-      this.setState({
-        entriesList: d3.shuffle(values), // ?
-        // entriesLoaded: true, // ?
-      })
+      this.setState({ entriesList: d3.shuffle(values) });
     });
   }
 

@@ -8,8 +8,9 @@ class Cycle extends React.Component {
     super(props);
 
     this.state = {
-      date: Date.now() + 30000,
+      date: Date.now() + 60000,
       entryIndex: 0,
+      roundCompleted: false,
     };
 
     this.createEntriesCompletedTracker();
@@ -27,62 +28,82 @@ class Cycle extends React.Component {
     this.entriesCompletedTracker = entriesCompletedTracker;
   }
 
-  calculateNextIndex() {
-    const nextIndex = this.state.entryIndex + 1;
+  skipEntry() {
+    this.goToCorrectNextIndex();
+  }
+
+  completeEntry(entry) {
+    this.entriesCompletedTracker[entry] = true;
+    const roundCompleted = this.checkIfRoundCompleted();
+
+    if (roundCompleted) {
+      this.setState({ roundCompleted: true });
+    } else {
+      this.goToCorrectNextIndex();
+    }
+  }
+
+  goToCorrectNextIndex() {
+    let nextIndex = this.state.entryIndex + 1;
 
     if (nextIndex === this.props.entriesList.length) {
-      return 0;
+      nextIndex = 0;
     }
 
-    return nextIndex;
-  }
+    let nextEntry = this.props.entriesList[nextIndex];
+    let nextEntryAlreadyCompleted = this.entriesCompletedTracker[nextEntry];
 
-  skipEntry() {
-    const nextIndex = this.calculateNextIndex();
+    while (nextEntryAlreadyCompleted) {
+      nextIndex += 1;
+
+      if (nextIndex === this.props.entriesList.length) {
+        nextIndex = 0;
+      }
+      
+      nextEntry = this.props.entriesList[nextIndex];
+      nextEntryAlreadyCompleted = this.entriesCompletedTracker[nextEntry];
+    }
+
     this.setState({ entryIndex: nextIndex });
   }
 
-  nextEntry(entry) {
-    this.entriesCompletedTracker[entry] = true;
-    const nextIndex = this.calculateNextIndex();
-    this.setState({ entryIndex: nextIndex });
+  checkIfRoundCompleted() {
+    const completedStatuses = Object.values(this.entriesCompletedTracker);
+
+    for (let i = 0; i < completedStatuses.length; i++) {
+      let completed = completedStatuses[i];
+
+      if (!completed) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   getCurrentEntry() {
     const { entryIndex } = this.state;
     const { entriesList } = this.props;
+
     let entry = entriesList[entryIndex];
-
-    let completedCounter = 0;
-    const entriesListLength = this.props.entriesList.length;
-    while (this.entriesCompletedTracker[entry] && completedCounter < entriesListLength) {
-      completedCounter += 1;
-      let nextIndex = this.calculateNextIndex();
-      entry = entriesList[nextIndex];
-    }
-
-    if (completedCounter === entriesListLength) {
-      return '***ROUND IS COMPLETE***';
-    }
-
     return entry;
   }
 
   render() {
-    const currentEntry = this.getCurrentEntry();
-
-    if (currentEntry === '***ROUND IS COMPLETE***') {
+    if (this.state.roundComplete) {
       return (
         <ButtonSize
-          style={forceButtonStyle}
+          style={buttonStyle}
           onClick={() => nextRound()}
-          size='small'
+          size='large'
           type='primary'
         >
           DONE! Play Next Round
         </ButtonSize>
       );
     }
+
+    const currentEntry = this.getCurrentEntry();
 
     const onComplete = () => {
       // pass cycle results back up to CycleManager
@@ -105,11 +126,11 @@ class Cycle extends React.Component {
             </ButtonSize>
             <ButtonSize
               style={{ border: 'none', backgroundColor: 'green' }}
-              onClick={() => this.nextEntry(currentEntry)}
+              onClick={() => this.completeEntry(currentEntry)}
               size='large'
               type='primary'
             >
-              NEXT
+              WE GOT IT!
             </ButtonSize>
           </div>
         </div>
@@ -123,7 +144,7 @@ class Cycle extends React.Component {
         </div>
 
         <ButtonSize
-          style={forceButtonStyle}
+          style={buttonStyle}
           onClick={() => this.props.cycleNotReady()}
           size='small'
           type='primary'
@@ -131,7 +152,7 @@ class Cycle extends React.Component {
           FORCE NEXT CYCLE
         </ButtonSize>
         <ButtonSize
-          style={forceButtonStyle}
+          style={buttonStyle}
           onClick={() => nextRound()}
           size='small'
           type='primary'
@@ -163,8 +184,8 @@ const timerStyle = {
   textAlign: 'center',
 };
 
-const forceButtonStyle = {
-  width: '60%',
+const buttonStyle = {
+  width: '75%',
   marginTop: '50px',
   border: 'none',
   backgroundColor: 'red',
