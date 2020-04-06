@@ -8,7 +8,7 @@ class Cycle extends React.Component {
     super(props);
 
     this.state = {
-      date: Date.now() + 60000,
+      date: Date.now() + 20000,
       entryIndex: 0,
       roundCompleted: false,
     };
@@ -99,7 +99,7 @@ class Cycle extends React.Component {
     if (this.state.roundCompleted) {
       return (
         <ButtonSize
-          style={buttonStyle}
+          style={{ ...forceButtonStyle, backgroundColor: 'blue' }}
           onClick={() => nextRound(this.props.docIds)}
           size='large'
           type='primary'
@@ -150,7 +150,7 @@ class Cycle extends React.Component {
         </div>
 
         <ButtonSize
-          style={buttonStyle}
+          style={forceButtonStyle}
           onClick={() => this.props.cycleNotReady(this.entriesCompletedTracker)}
           size='small'
           type='primary'
@@ -158,7 +158,7 @@ class Cycle extends React.Component {
           FORCE NEXT CYCLE
         </ButtonSize>
         <ButtonSize
-          style={buttonStyle}
+          style={forceButtonStyle}
           onClick={() => nextRound(this.props.docIds)}
           size='small'
           type='primary'
@@ -190,11 +190,11 @@ const timerStyle = {
   textAlign: 'center',
 };
 
-const buttonStyle = {
+const forceButtonStyle = {
   width: '75%',
   marginTop: '50px',
   border: 'none',
-  backgroundColor: 'green',
+  backgroundColor: 'red',
   height: '45px',
 }
 
