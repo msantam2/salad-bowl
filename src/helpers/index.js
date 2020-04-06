@@ -3,3 +3,4 @@ export * from './GameReady';
 export * from './StopGame';
 export * from './GetEntries';
 export * from './NextRound';
+export * from './UpdateBowl';

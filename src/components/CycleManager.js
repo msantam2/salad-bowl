@@ -2,7 +2,7 @@ import React from 'react';
 import * as d3 from 'd3-array';
 import Cycle from './Cycle';
 import { PlayButton } from './common';
-import { getEntries } from '../helpers';
+import { getEntries, updateBowl } from '../helpers';
 
 class CycleManager extends React.Component {
   constructor(props) {
@@ -11,21 +11,38 @@ class CycleManager extends React.Component {
       cycleReady: false,
       entriesList: [],
     };
-
-    this.initialFetch = true;
   }
 
   cycleReady() {
-    const entriesToFetch = this.initialFetch ? 'all' : 'still in bowl';
-    const entries = getEntries(entriesToFetch);
+    const entries = getEntries();
 
     entries.then(values => {
-      this.initialFetch = false;
+      const filteredEntries = this.filterEntries(values);
+
       this.setState({
-        entriesList: d3.shuffle(values),
+        entriesList: d3.shuffle(filteredEntries),
         cycleReady: true,
       });
     });
+  }
+
+  filterEntries(entries) {
+    // entries =>
+    // [{ entry: 'a-1', completed: false }, { entry: 'b-2', completed: true }]
+
+    let filteredEntries = [];
+
+    for (let i = 0; i < entries.length; i++) {
+      let entryData = entries[i];
+      let entry = entryData['entry'];
+      let completed = entryData['completed'];
+
+      if (!completed) {
+        filteredEntries.push(entry);
+      }
+    }
+
+    return filteredEntries;
   }
 
   cycleNotReady(entriesCompletedTracker) {
@@ -40,10 +57,8 @@ class CycleManager extends React.Component {
     }
 
     // push stilInBowl to still_in_bowl collection
-    
-
-    // nest this inside
-    this.setState({ cycleReady: false });
+      // nest this inside
+      this.setState({ cycleReady: false });
   }
 
   render() {

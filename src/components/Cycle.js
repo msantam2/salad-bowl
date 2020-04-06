@@ -89,6 +89,12 @@ class Cycle extends React.Component {
     return entry;
   }
 
+  formatEntry(entry) {
+    let formattedEntry = entry.split('-');
+    formattedEntry = formattedEntry.splice(0, formattedEntry.length - 1).join('-');
+    return formattedEntry;
+  }
+
   render() {
     if (this.state.roundCompleted) {
       return (
@@ -104,6 +110,7 @@ class Cycle extends React.Component {
     }
 
     const currentEntry = this.getCurrentEntry();
+    let formattedEntry = this.formatEntry(currentEntry);
 
     const onComplete = () => {
       this.props.cycleNotReady(this.entriesCompletedTracker);
@@ -112,7 +119,7 @@ class Cycle extends React.Component {
     return (
       <div style={containerStyle}>
         <div>
-          <h1 style={entryStyle}>{currentEntry}</h1>
+          <h1 style={entryStyle}>{formattedEntry}</h1>
 
           <div style={buttonContainerStyle}>
             <ButtonSize

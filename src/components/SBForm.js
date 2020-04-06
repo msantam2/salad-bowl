@@ -32,8 +32,11 @@ class SBForm extends React.Component {
     if (this.state.entriesSubmitted) {
       return <GameWaitingRoom />;
     } else {
-      const onFinish = (values) => {
-        const success = submitEntries(values);
+      const onFinish = (entryFields) => {
+        // entryFields => { entry1: 'a', entry2: 'b' }
+        const entries = Object.values(entryFields);
+        const success = submitEntries(entries);
+
         if (success) {
           this.setState({ entriesSubmitted: true })
         }

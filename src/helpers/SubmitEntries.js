@@ -2,20 +2,18 @@ import Firebase from 'firebase/app';
 import 'firebase/firestore';
 
 const submitEntries = (entries) => {
-  // entries:
-  // { entry1: "a", entry2: "b", entry3: "c", entry4: "d", entry5: "e" }
-
   const db = Firebase.firestore();
 
-  for (let field in entries) {
-    const entry = entries[field];
+  for (let i = 0; i < entries.length; i++) {
+    const entry = entries[i];
+    const uniqueEntryId = `${entry}-${i}`;
 
-    db.collection("entries").add({ entry })
-    .then((docRef) => {
-      console.log("Document written for entry: ", entry);
+    db.collection('entries').doc(uniqueEntryId).set({ completed: false })
+    .then((_docRef) => {
+      console.log('Document written for entry: ', entry);
     })
     .catch((error) => {
-      console.error("Error adding document: ", error);
+      console.error('Error adding document: ', error);
     });
   }
 
