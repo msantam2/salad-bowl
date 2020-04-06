@@ -10,6 +10,7 @@ class CycleManager extends React.Component {
     this.state = {
       cycleReady: false,
       entriesList: [],
+      docIds: [],
     };
   }
 
@@ -18,10 +19,12 @@ class CycleManager extends React.Component {
 
     entries.then(values => {
       const filteredEntries = this.filterEntries(values);
+      const docIds = this.listDocIds(values);
 
       this.setState({
-        entriesList: d3.shuffle(filteredEntries),
         cycleReady: true,
+        entriesList: d3.shuffle(filteredEntries),
+        docIds: docIds,
       });
     });
   }
@@ -45,20 +48,34 @@ class CycleManager extends React.Component {
     return filteredEntries;
   }
 
+  listDocIds(entries) {
+    // entries =>
+    // [{ entry: 'a-1', completed: false }, { entry: 'b-2', completed: true }]
+
+    let docIds = [];
+
+    for (let i = 0; i < entries.length; i++) {
+      let entryData = entries[i];
+      let entry = entryData['entry'];
+      docIds.push(entry);
+    }
+
+    return docIds;
+  }
+
   cycleNotReady(entriesCompletedTracker) {
-    let stillInBowl = [];
+    let completed = [];
 
     for (let key in entriesCompletedTracker) {
       if (entriesCompletedTracker.hasOwnProperty(key)) {
-        if (!(entriesCompletedTracker[key])) {
-          stillInBowl.push(key);
+        if (entriesCompletedTracker[key]) {
+          completed.push(key);
         }
       }
     }
 
-    // push stilInBowl to still_in_bowl collection
-      // nest this inside
-      this.setState({ cycleReady: false });
+    updateBowl(completed);
+    this.setState({ cycleReady: false });
   }
 
   render() {
@@ -75,6 +92,7 @@ class CycleManager extends React.Component {
         key={Date.now()}
         cycleNotReady={this.cycleNotReady.bind(this)}
         entriesList={this.state.entriesList}
+        docIds={this.state.docIds}
       />
     );
   }

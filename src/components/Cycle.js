@@ -100,7 +100,7 @@ class Cycle extends React.Component {
       return (
         <ButtonSize
           style={buttonStyle}
-          onClick={() => nextRound()}
+          onClick={() => nextRound(this.props.docIds)}
           size='large'
           type='primary'
         >
@@ -159,7 +159,7 @@ class Cycle extends React.Component {
         </ButtonSize>
         <ButtonSize
           style={buttonStyle}
-          onClick={() => nextRound()}
+          onClick={() => nextRound(this.props.docIds)}
           size='small'
           type='primary'
         >
@@ -194,7 +194,7 @@ const buttonStyle = {
   width: '75%',
   marginTop: '50px',
   border: 'none',
-  backgroundColor: 'red',
+  backgroundColor: 'green',
   height: '45px',
 }
 

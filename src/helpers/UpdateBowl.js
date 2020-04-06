@@ -1,23 +1,19 @@
 import Firebase from 'firebase/app';
 import 'firebase/firestore';
 
-const updateBowl = async (entries) => {
+const updateBowl = (completedEntries) => {
   const db = Firebase.firestore();
 
-  for (let i = 0; i < entries.length; i++) {
-    const entry = entries[i];
-    const uniqueEntryId = `${entry}-${i}`;
+  for (let i = 0; i < completedEntries.length; i++) {
+    const entry = completedEntries[i];
 
-    // db.collection('entries').doc(uniqueEntryId).set({
-    //   entry: entry,
-    //   completed: false,
-    // })
-    // .then((_docRef) => {
-    //   console.log('Document written for entry: ', entry);
-    // })
-    // .catch((error) => {
-    //   console.error('Error adding document: ', error);
-    // });
+    db.collection('entries').doc(entry).set({ completed: true })
+    .then((_docRef) => {
+      console.log('Document marked as completed: ', entry);
+    })
+    .catch((error) => {
+      console.error('Error marking document completed: ', error);
+    });
   }
 
   // make more reliable when needed
