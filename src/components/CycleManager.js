@@ -7,11 +7,7 @@ import { getEntries } from '../helpers';
 class CycleManager extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      cycleReady: false,
-      entriesList: [],
-    };
+    this.state = { cycleReady: false, entriesList: [] };
   }
 
   componentDidMount() {
@@ -26,7 +22,19 @@ class CycleManager extends React.Component {
     this.setState({ cycleReady: true });
   }
 
-  cycleNotReady() {
+  cycleNotReady(entriesCompletedTracker) {
+    let stillInBowl = [];
+
+    for (let key in entriesCompletedTracker) {
+      if (entriesCompletedTracker.hasOwnProperty(key)) {
+        if (!(entriesCompletedTracker[key])) {
+          stillInBowl.push(key);
+        }
+      }
+    }
+
+
+    
     this.setState({ cycleReady: false });
   }
 

@@ -106,8 +106,7 @@ class Cycle extends React.Component {
     const currentEntry = this.getCurrentEntry();
 
     const onComplete = () => {
-      // pass cycle results back up to CycleManager
-      this.props.cycleNotReady();
+      this.props.cycleNotReady(this.entriesCompletedTracker);
     };
 
     return (
@@ -145,7 +144,7 @@ class Cycle extends React.Component {
 
         <ButtonSize
           style={buttonStyle}
-          onClick={() => this.props.cycleNotReady()}
+          onClick={() => this.props.cycleNotReady(this.entriesCompletedTracker)}
           size='small'
           type='primary'
         >
