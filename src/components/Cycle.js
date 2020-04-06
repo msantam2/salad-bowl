@@ -59,7 +59,7 @@ class Cycle extends React.Component {
       if (nextIndex === this.props.entriesList.length) {
         nextIndex = 0;
       }
-      
+
       nextEntry = this.props.entriesList[nextIndex];
       nextEntryAlreadyCompleted = this.entriesCompletedTracker[nextEntry];
     }
@@ -72,7 +72,7 @@ class Cycle extends React.Component {
 
     for (let i = 0; i < completedStatuses.length; i++) {
       let completed = completedStatuses[i];
-
+      
       if (!completed) {
         return false;
       }
@@ -90,7 +90,7 @@ class Cycle extends React.Component {
   }
 
   render() {
-    if (this.state.roundComplete) {
+    if (this.state.roundCompleted) {
       return (
         <ButtonSize
           style={buttonStyle}
