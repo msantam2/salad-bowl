@@ -70,10 +70,21 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/ma
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
 
+### `npm run build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
 ### Deployment
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
 
-### `npm run build` fails to minify
+#### On GCP App Engine
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+1. Install `gcloud` Cloud SDK
+2. `gcloud auth login <email>`
+3. `gcloud config list` ensure on correct Project, if not…
+4. Get `PROJECT_ID` via `gcloud projects list`
+5. `gcloud config set project <PROJECT_ID>`
+6. Add "app.yaml" & ".gcloudignore" files to project
+7. `npm run build`
+8. `gcloud app deploy`
