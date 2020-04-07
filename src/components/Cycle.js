@@ -8,7 +8,7 @@ class Cycle extends React.Component {
     super(props);
 
     this.state = {
-      date: Date.now() + 20000,
+      date: Date.now() + 10000,
       entryIndex: 0,
       roundCompleted: false,
     };
@@ -95,17 +95,32 @@ class Cycle extends React.Component {
     return formattedEntry;
   }
 
+  formatResults(results) {
+    return results.map((result) => {
+      const split = result.split('-');
+      return split.splice(0, split.length - 1).join('-');
+    })
+      .join(', ');
+  }
+
   render() {
     if (this.state.roundCompleted) {
+      const formattedResults = this.formatResults(Object.keys(this.entriesCompletedTracker));
+
       return (
-        <ButtonSize
-          style={{ ...forceButtonStyle, backgroundColor: 'blue' }}
-          onClick={() => nextRound(this.props.docIds)}
-          size='large'
-          type='primary'
-        >
-          DONE! Play Next Round
-        </ButtonSize>
+        <div>
+          <p style={{ fontWeight: 'bold' }}>
+            {formattedResults}
+          </p>
+          <ButtonSize
+            style={{ ...forceButtonStyle, backgroundColor: 'blue' }}
+            onClick={() => nextRound(this.props.docIds)}
+            size='large'
+            type='primary'
+          >
+            DONE! Play Next Round
+          </ButtonSize>
+        </div>
       );
     }
 

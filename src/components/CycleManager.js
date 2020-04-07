@@ -11,6 +11,7 @@ class CycleManager extends React.Component {
       cycleReady: false,
       entriesList: [],
       docIds: [],
+      cycleResults: [],
     };
   }
 
@@ -75,15 +76,30 @@ class CycleManager extends React.Component {
     }
 
     updateBowl(completed);
-    this.setState({ cycleReady: false });
+    this.setState({ cycleReady: false, cycleResults: completed });
+  }
+
+  formatResults(results) {
+    return results.map((result) => {
+      const split = result.split('-');
+      return split.splice(0, split.length - 1).join('-');
+    })
+      .join(', ');
   }
 
   render() {
     if (!(this.state.cycleReady)) {
+      const formattedResults = this.formatResults(this.state.cycleResults);
+
       return (
-        <PlayButton playFunc={this.cycleReady.bind(this)}>
-          START CYCLE
-        </PlayButton>
+        <div>
+          <p style={{ fontWeight: 'bold' }}>
+            {formattedResults}
+          </p>
+          <PlayButton playFunc={this.cycleReady.bind(this)}>
+            START CYCLE
+          </PlayButton>
+        </div>
       );
     }
 
