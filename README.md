@@ -4,9 +4,9 @@ A game to play with your family & friends who are also in quarantine.
 Have fun, think hard, play to win!
 
 ## Future Bells n' Whistles
-- To support multiple groups playing (simultaneous games), landing page UI to enter group name. Then, prepend this group name to calls to Firebase. This way, games can be isolated from one another (namespaced).
+- To support multiple groups playing (simultaneous games), landing page UI to enter a room code. Then, prepend this room code to calls to Firebase. This way, games can be isolated from one another (namespaced).
 - More robust handling of unwanted user behavior, i.e. spurious button presses by other players when it's not allowed
-
+- Team selection, and the game enforcing order of play
 
 -------------------
 
