@@ -8,7 +8,7 @@ class Cycle extends React.Component {
     super(props);
 
     this.state = {
-      date: Date.now() + 10000,
+      date: Date.now() + 60000,
       entryIndex: 0,
       roundCompleted: false,
     };
